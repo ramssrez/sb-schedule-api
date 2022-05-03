@@ -23,4 +23,13 @@ public class DateUtils {
         return date.format(DateTimeFormatter.ofPattern(defaultDateFormat));
     }
 
+    public LocalDate parseDefaultDate(String date) {
+        if(date == null) return null;
+        return LocalDate.parse(date,DateTimeFormatter.ofPattern(defaultDateFormat));
+    }
+
+    public LocalDateTime parseDefaultDateTime(String datetime) {
+        if(datetime == null) return null;
+        return LocalDateTime.parse(datetime,DateTimeFormatter.ofPattern(defaultDateTimeFormat));
+    }
 }
