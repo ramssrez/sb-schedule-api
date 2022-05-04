@@ -8,15 +8,15 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class DateUtils {
+    private final String defaultDateTimeFormat = "MM/dd/yyyy hh:mm:ss";
+    private final String defaultDateFormat = "MM/dd/yyyy";
 
     public String formatDefault(LocalDateTime dateTime) {
-        String defaultDateTimeFormat = "MM/dd/yyyy hh:mm:ss";
         if(dateTime == null) return null;
         return dateTime.format(DateTimeFormatter.ofPattern(defaultDateTimeFormat));
     }
 
     public String formatDefault(LocalDate date) {
-        String defaultDateFormat = "MM/dd/yyyy";
         if(date == null) return null;
         return date.format(DateTimeFormatter.ofPattern(defaultDateFormat));
     }
