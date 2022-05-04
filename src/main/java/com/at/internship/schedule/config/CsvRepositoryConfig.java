@@ -14,7 +14,7 @@ public class CsvRepositoryConfig {
     public static final String BEAN_APPOINTMENT_REPOSITORY="csvAppointmentRepository";
 
     @Bean(name = BEAN_CONTACT_REPOSITORY)
-    //@Primary posible solucion
+    //@Primary posible solucion para la selección del primer bean
     public IContactRepository csvContactRepository(){
         return CsvContactRepository.getSingleton();
     }
