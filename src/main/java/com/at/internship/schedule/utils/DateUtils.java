@@ -6,8 +6,13 @@ import java.time.format.DateTimeFormatter;
 
 //@Component
 public class DateUtils {
-    private final String defaultDateTimeFormat = "MM/dd/yyyy hh:mm:ss";
-    private final String defaultDateFormat = "MM/dd/yyyy";
+    private final String defaultDateTimeFormat;
+    private final String defaultDateFormat;
+
+    public DateUtils(String defaultDateTimeFormat, String defaultDateFormat) {
+        this.defaultDateTimeFormat = defaultDateTimeFormat;
+        this.defaultDateFormat = defaultDateFormat;
+    }
 
     public String formatDefault(LocalDateTime dateTime) {
         if(dateTime == null) return null;
