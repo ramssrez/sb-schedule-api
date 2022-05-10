@@ -14,6 +14,7 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private Integer contactId;
     private LocalDateTime time;
     private String subject;
