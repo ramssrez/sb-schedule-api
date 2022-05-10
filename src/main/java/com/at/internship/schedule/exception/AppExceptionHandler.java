@@ -16,7 +16,6 @@ import java.util.List;
 public class AppExceptionHandler {
     private static final String STR_NESTED_EXCEPTION = "nested exception is";
     @ExceptionHandler(HttpMessageNotReadableException.class)
-   // @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handlerhttpMessageNotReadableException(HttpMessageNotReadableException e){
         e.printStackTrace();
@@ -30,8 +29,6 @@ public class AppExceptionHandler {
         return response;
     }
 
-
-    //@ExceptionHandler(Meth)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse methodArgumentNotValidException(MethodArgumentNotValidException e){
@@ -48,6 +45,4 @@ public class AppExceptionHandler {
         response.setErrorMessage(errorMessages);
         return response;
     }
-
-
 }
