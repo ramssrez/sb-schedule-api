@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Deprecated
 @SuppressWarnings("unused")
-public class MockAppointmentRepositoryImpl implements IAppointmentRepository {
+public class MockAppointmentRepositoryImpl //implements IAppointmentRepository
+{
 
     private static final List<Appointment> APPOINTMENT_LIST;
 

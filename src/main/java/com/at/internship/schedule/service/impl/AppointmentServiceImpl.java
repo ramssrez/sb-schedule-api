@@ -23,4 +23,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
         return appointmentRepository.findAll();
     }
 
+    @Override
+    public Appointment create(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
 }
