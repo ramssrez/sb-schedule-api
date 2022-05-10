@@ -1,13 +1,10 @@
 package com.at.internship.schedule.service.impl;
 
-import com.at.internship.schedule.config.CsvRepositoryConfig;
 import com.at.internship.schedule.domain.Contact;
 import com.at.internship.schedule.repository.IContactRepository;
 import com.at.internship.schedule.service.IContactService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -16,7 +13,6 @@ public class ContactServiceImpl implements IContactService {
     private final IContactRepository contactRepository;
 
     public ContactServiceImpl(
-            @Qualifier(CsvRepositoryConfig.BEAN_CONTACT_REPOSITORY)
             IContactRepository contactRepository
     ) {
         this.contactRepository = contactRepository;
@@ -28,7 +24,7 @@ public class ContactServiceImpl implements IContactService {
     }
 
     @Override
-    public Contact create(Contact contact) throws IOException {
+    public Contact create(Contact contact) {
         return contactRepository.save(contact);
     }
 }
