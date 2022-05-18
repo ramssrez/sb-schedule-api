@@ -4,13 +4,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Data
 @Entity
 @Table(name = "appointment")
-public class Appointment {
+public class Appointment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +23,20 @@ public class Appointment {
 
     @Column(name = "subject", nullable = false, length = 500)
     private String subject;
-    // Lazy load contacts
-    //private Contact contact;
+
+    @ManyToOne
+    private Contact contact;
+
+    @ManyToMany
+    /*
+    @JoinTable(
+            name = "appointment-assistant",
+            joinColumns = @JoinColumn(name = "appointment_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "contact_id",referencedColumnName = "id")
+    )
+
+     */
+    private List<Contact> contacts;
 
     @Override
     public boolean equals(Object o) {
