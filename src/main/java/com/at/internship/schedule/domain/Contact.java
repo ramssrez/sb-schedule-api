@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "contact")
+@Table(name = "contacts")
 public class Contact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,21 +28,6 @@ public class Contact implements Serializable {
 
     @Column(name = "birth_day", nullable = false)
     private LocalDate birthDay;
-
-    @ManyToMany
-    /*
-    @JoinTable(
-            name = "appointment-assistant",
-            joinColumns = @JoinColumn(name = "contact_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "appointment_id",referencedColumnName = "id")
-    )
-     */
-    private List<Appointment> appointments;
-
-
-    // Lazy load contactPhones
-    //private List<ContactPhone> contactPhones;
-    // Lazy load appointments
 
     @Override
     public boolean equals(Object o) {

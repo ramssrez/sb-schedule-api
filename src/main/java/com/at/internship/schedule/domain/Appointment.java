@@ -1,7 +1,6 @@
 package com.at.internship.schedule.domain;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +10,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "appointment")
+@Table(name = "appointments")
 public class Appointment implements Serializable {
 
     @Id
@@ -26,17 +25,6 @@ public class Appointment implements Serializable {
 
     @ManyToOne
     private Contact contact;
-
-    @ManyToMany
-    /*
-    @JoinTable(
-            name = "appointment-assistant",
-            joinColumns = @JoinColumn(name = "appointment_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "contact_id",referencedColumnName = "id")
-    )
-
-     */
-    private List<Contact> contacts;
 
     @Override
     public boolean equals(Object o) {

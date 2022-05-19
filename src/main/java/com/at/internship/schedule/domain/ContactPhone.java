@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "contact_phone")
+@Table(name = "contact_phones")
 public class ContactPhone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
