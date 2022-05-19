@@ -1,17 +1,15 @@
 package com.at.internship.schedule.domain;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "contacts")
+@Table(name = "contact")
 public class Contact implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
