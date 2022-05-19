@@ -19,4 +19,9 @@ public class ContactServiceImpl implements IContactService {
     public List<Contact> findAll() {
         return contactRepository.findAll();
     }
+
+    @Override
+    public Contact create(Contact contact) {
+        return contactRepository.save(contact);
+    }
 }

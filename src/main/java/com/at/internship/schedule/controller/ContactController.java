@@ -2,9 +2,7 @@ package com.at.internship.schedule.controller;
 
 import com.at.internship.schedule.domain.Contact;
 import com.at.internship.schedule.service.IContactService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +18,10 @@ public class ContactController {
     @GetMapping("/all")
     public List<Contact> findAll(){
         return contactService.findAll();
+    }
+
+    @PostMapping("/new")
+    public Contact create(@RequestBody Contact contact){
+        return contactService.create(contact);
     }
 }
