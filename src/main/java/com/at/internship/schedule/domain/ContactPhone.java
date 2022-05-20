@@ -13,6 +13,9 @@ public class ContactPhone implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "contact_id", nullable = false)
+    private Integer id_contact;
+
     @Column(name = "phone_number", nullable = false, length = 50)
     private String phoneNumber;
 
@@ -20,6 +23,7 @@ public class ContactPhone implements Serializable {
     private String label;
 
     @ManyToOne
+    @JoinColumn(name = "contact_id",insertable = false, updatable = false)
     private Contact contact;
 
 }

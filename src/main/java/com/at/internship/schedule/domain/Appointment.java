@@ -9,12 +9,15 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "appointment")
+@Table(name = "appointments")
 public class Appointment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "contact_id", nullable = false)
+    private Integer id_contact;
 
     @Column(name = "local_date", nullable = false)
     private LocalDateTime time;
@@ -22,8 +25,9 @@ public class Appointment implements Serializable {
     @Column(name = "subject", nullable = false, length = 500)
     private String subject;
 
-    //@ManyToOne
-    //private Contact contact;
+    @ManyToOne
+    @JoinColumn(name = "contact_id",insertable = false, updatable = false)
+    private Contact contact;
 
     @Override
     public boolean equals(Object o) {
