@@ -1,16 +1,12 @@
 package com.at.internship.schedule.controller;
 
 import com.at.internship.schedule.converter.ContactConverter;
-import com.at.internship.schedule.domain.Contact;
 import com.at.internship.schedule.dto.ContactDto;
 import com.at.internship.schedule.service.IContactService;
-import com.at.internship.schedule.utils.DateUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,7 +37,7 @@ public class ContactController {
 
     @GetMapping("/find/{id}")
     public ContactDto findById(@PathVariable("id") Integer id){
-        return contactConverter.toContactDto(contactService.findById(id).get());
+        return contactConverter.toContactDto(Objects.requireNonNull(contactService.findById(id).orElse(null)));
     }
 
     /*
