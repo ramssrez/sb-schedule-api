@@ -9,5 +9,5 @@ public class ContactDto {
     private String firstName;
     private String lastName;
     private String emailAddress;
-    private LocalDate birthDay;
+    private String birthDay;
 }
