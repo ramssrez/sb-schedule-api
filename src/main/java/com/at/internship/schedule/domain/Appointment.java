@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "appointments")
+@Table(name = "appointment")
 public class Appointment implements Serializable {
 
     @Id
@@ -22,8 +22,8 @@ public class Appointment implements Serializable {
     @Column(name = "subject", nullable = false, length = 500)
     private String subject;
 
-    @ManyToOne
-    private Contact contact;
+    //@ManyToOne
+    //private Contact contact;
 
     @Override
     public boolean equals(Object o) {
