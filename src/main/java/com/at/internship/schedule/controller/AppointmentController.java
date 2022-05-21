@@ -18,9 +18,9 @@ public class AppointmentController {
         this.iAppointmentService = iAppointmentService;
     }
 
-    @GetMapping("/all")
-    public List<Appointment> findAll(){
-        return iAppointmentService.findAll();
-    }
+//    @GetMapping("/all")
+//    public List<Appointment> findAll(){
+//        return iAppointmentService.findAll();
+//    }
 
 }

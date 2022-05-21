@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "appointments")
+@Table(name = "appointment")
 public class Appointment implements Serializable {
 
     @Id

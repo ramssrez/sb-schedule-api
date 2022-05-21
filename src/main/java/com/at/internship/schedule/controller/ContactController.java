@@ -5,6 +5,7 @@ import com.at.internship.schedule.dto.ContactDto;
 import com.at.internship.schedule.service.IContactService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class ContactController {
     }
 
     @PostMapping("/new")
-    public ContactDto create(@RequestBody ContactDto contact){
+    public ContactDto create(@RequestBody @Valid ContactDto contact){
         return contactConverter.toContactDto(contactService.create(contactConverter.toContact(contact)));
     }
 
