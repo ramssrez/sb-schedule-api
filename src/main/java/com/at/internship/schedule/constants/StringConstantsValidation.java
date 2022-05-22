@@ -9,4 +9,5 @@ public class StringConstantsValidation {
     public static final String VALIDATION_LENGTH_FIRST_NAME = "First name should be at least two characters length";
     public static final String VALIDATION_BIRTHDAY_EMPTY = "Birth day must not be empty";
     public static final String VALIDATION_BIRTHDAY_NULL = "Birth day is required";
+    public static final String VALIDATION_ID = "Id is required";
 }

@@ -5,6 +5,7 @@ import com.at.internship.schedule.converter.ContactConverter;
 import com.at.internship.schedule.domain.Contact;
 import com.at.internship.schedule.dto.ContactCreateDto;
 import com.at.internship.schedule.dto.ContactDetailsDto;
+import com.at.internship.schedule.dto.ContactUpdateDto;
 import com.at.internship.schedule.response.GenericResponse;
 import com.at.internship.schedule.service.IContactService;
 import org.springframework.web.bind.annotation.*;
@@ -25,16 +26,6 @@ public class ContactController {
         this.contactConverter = contactConverter;
     }
 
-
-    /*
-    @GetMapping("/all")
-    public List<ContactDto> findAll(){
-        return contactService.findAll().stream().map(contactConverter::toContactDto).collect(Collectors.toList());
-    }
-
-     */
-
-
     @GetMapping("/all")
     public GenericResponse<List<ContactDetailsDto>> findAll(){
         List<ContactDetailsDto> contactDtos= contactService.findAll().stream().map(contactConverter::contactToContactDto).collect(Collectors.toList());
@@ -50,14 +41,6 @@ public class ContactController {
         return response;
     }
 
-    /*
-    @PostMapping("/new")
-    public ContactDto create(@RequestBody @Valid ContactDto contact){
-        return contactConverter.contactToContactDto(contactService.create(contactConverter.contactDtoToContact(contact)));
-    }
-
-     */
-
     @PostMapping("/new")
     public GenericResponse<ContactDetailsDto> createContact(@RequestBody @Valid ContactCreateDto contactCreateDto){
         GenericResponse<ContactDetailsDto> response = new GenericResponse<>();
@@ -70,8 +53,14 @@ public class ContactController {
     }
 
     @PutMapping("/update")
-    public ContactDetailsDto update(@RequestBody ContactDetailsDto contact){
-        return contactConverter.contactToContactDto(contactService.update(contactConverter.contactDtoToContact(contact)));
+    public GenericResponse<ContactDetailsDto> update(@RequestBody  @Valid ContactUpdateDto contactUpdateDto){
+        GenericResponse<ContactDetailsDto> response = new GenericResponse<>();
+        Contact contact = contactService.update(contactConverter.updateDtoToContact(contactUpdateDto));
+        ContactDetailsDto dto = contactConverter.contactToContactDto(contact);
+        response.setContent(dto);
+        response.setCode(StringConstants.FORMAT_RESPONSE_CODE);
+        response.setMessage(StringConstants.FORMAT_RESPONSE_MESSAGE);
+        return response;
     }
 
     @GetMapping("/find/{id}")

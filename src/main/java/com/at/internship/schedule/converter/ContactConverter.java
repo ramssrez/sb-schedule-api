@@ -3,6 +3,7 @@ package com.at.internship.schedule.converter;
 import com.at.internship.schedule.domain.Contact;
 import com.at.internship.schedule.dto.ContactDetailsDto;
 import com.at.internship.schedule.dto.ContactCreateDto;
+import com.at.internship.schedule.dto.ContactUpdateDto;
 import com.at.internship.schedule.utils.DateUtils;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +49,14 @@ public class ContactConverter {
         contact.setBirthDay(dateUtils.parseDefaultDate(createDto.getBirthDay()));
         return contact;
     }
-
+    public Contact updateDtoToContact(ContactUpdateDto updateDto){
+        Contact contact = new Contact();
+        contact.setId(updateDto.getId());
+        contact.setFirstName(updateDto.getFirstName());
+        contact.setLastName(updateDto.getLastName());
+        contact.setEmailAddress(updateDto.getEmailAddress());
+        contact.setBirthDay(dateUtils.parseDefaultDate(updateDto.getBirthDay()));
+        return contact;
+    }
 
 }
