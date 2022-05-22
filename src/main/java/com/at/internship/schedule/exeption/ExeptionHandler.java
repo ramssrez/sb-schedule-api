@@ -2,7 +2,6 @@ package com.at.internship.schedule.exeption;
 
 import com.at.internship.schedule.constants.StringConstantsErrors;
 import com.at.internship.schedule.response.ErrorResponse;
-import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,6 +56,16 @@ public class ExeptionHandler {
         response.setCode(StringConstantsErrors.RECORD_NOT_FOUND_CODE);
         response.setMessage(StringConstantsErrors.RECORD_NOT_FOUND_MESSAGE);
         response.setErrorMessages(Collections.singletonList(String.format(StringConstantsErrors.RECORD_NOT_FOUND_ERROR,errorM)));
+        return response;
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleSQLIntegrity(SQLIntegrityConstraintViolationException e){
+        ErrorResponse response = new ErrorResponse();
+        response.setCode(StringConstantsErrors.DB_CONSTRAIN_VIOLATION_CODE);
+        response.setMessage(StringConstantsErrors.DB_CONSTRAIN_VIOLATION_MESSAGE);
+        response.setErrorMessages(Collections.singletonList(e.getMessage()));
         return response;
     }
 }

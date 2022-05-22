@@ -2,7 +2,6 @@ package com.at.internship.schedule.response;
 
 import lombok.Data;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
