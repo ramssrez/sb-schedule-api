@@ -1,7 +1,11 @@
 package com.at.internship.schedule.controller;
 
+import com.at.internship.schedule.constants.StringConstants;
 import com.at.internship.schedule.converter.ContactConverter;
-import com.at.internship.schedule.dto.ContactDto;
+import com.at.internship.schedule.domain.Contact;
+import com.at.internship.schedule.dto.ContactCreateDto;
+import com.at.internship.schedule.dto.ContactDetailsDto;
+import com.at.internship.schedule.response.GenericResponse;
 import com.at.internship.schedule.service.IContactService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,33 +25,59 @@ public class ContactController {
         this.contactConverter = contactConverter;
     }
 
+
+    /*
     @GetMapping("/all")
     public List<ContactDto> findAll(){
         return contactService.findAll().stream().map(contactConverter::toContactDto).collect(Collectors.toList());
     }
 
-    @PostMapping("/new")
-    public ContactDto create(@RequestBody @Valid ContactDto contact){
-        return contactConverter.toContactDto(contactService.create(contactConverter.toContact(contact)));
-    }
+     */
 
-    @PutMapping("/update")
-    public ContactDto update(@RequestBody ContactDto contact){
-        return contactConverter.toContactDto(contactService.update(contactConverter.toContact(contact)));
-    }
 
-    @GetMapping("/find/{id}")
-    public ContactDto findById(@PathVariable("id") Integer id){
-        return contactConverter.toContactDto(Objects.requireNonNull(contactService.findById(id).orElse(null)));
+    @GetMapping("/all")
+    public GenericResponse<List<ContactDetailsDto>> findAll(){
+        List<ContactDetailsDto> contactDtos= contactService.findAll().stream().map(contactConverter::contactToContactDto).collect(Collectors.toList());
+        GenericResponse<List<ContactDetailsDto>> response = new GenericResponse<>();
+        if (contactDtos.isEmpty()) {
+            response.setCode("NOT_FOUND");
+            response.setMessage("N0 information in the DB");
+        }else{
+            response.setCode("OK");
+            response.setMessage("Success!");
+        }
+        response.setContent( contactService.findAll().stream().map(contactConverter::contactToContactDto).collect(Collectors.toList()));
+        return response;
     }
 
     /*
-    @GetMapping("/find/{id}")
-    public Optional<Contact> findById(@PathVariable("id") Integer id){
-        return contactService.findById(id);
+    @PostMapping("/new")
+    public ContactDto create(@RequestBody @Valid ContactDto contact){
+        return contactConverter.contactToContactDto(contactService.create(contactConverter.contactDtoToContact(contact)));
     }
 
      */
+
+    @PostMapping("/new")
+    public GenericResponse<ContactDetailsDto> createContact(@RequestBody @Valid ContactCreateDto contactCreateDto){
+        GenericResponse<ContactDetailsDto> response = new GenericResponse<>();
+        Contact contact = contactService.create(contactConverter.createDtoToContact(contactCreateDto));
+        ContactDetailsDto dto = contactConverter.contactToContactDto(contact);
+        response.setContent(dto);
+        response.setCode(StringConstants.FORMAT_RESPONSE_CODE);
+        response.setMessage(StringConstants.FORMAT_RESPONSE_MESSAGE);
+        return response;
+    }
+
+    @PutMapping("/update")
+    public ContactDetailsDto update(@RequestBody ContactDetailsDto contact){
+        return contactConverter.contactToContactDto(contactService.update(contactConverter.contactDtoToContact(contact)));
+    }
+
+    @GetMapping("/find/{id}")
+    public ContactDetailsDto findById(@PathVariable("id") Integer id){
+        return contactConverter.contactToContactDto(Objects.requireNonNull(contactService.findById(id).orElse(null)));
+    }
 
     @DeleteMapping("/delete/{id}")
     public void delete (@PathVariable("id") Integer id){
