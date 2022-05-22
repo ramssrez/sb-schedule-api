@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ErrorResponse extends GenericResponse{
+public class ErrorResponse <T> extends GenericResponse{
     List<String> errorMessages;
 }

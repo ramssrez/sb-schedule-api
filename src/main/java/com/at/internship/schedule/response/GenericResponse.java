@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class GenericResponse <T>{
+public class GenericResponse <T> {
     private LocalDateTime timestamp;
     private String code;
     private String message;
