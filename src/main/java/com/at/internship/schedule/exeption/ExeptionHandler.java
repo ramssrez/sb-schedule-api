@@ -1,6 +1,9 @@
 package com.at.internship.schedule.exeption;
 
+import com.at.internship.schedule.constants.StringConstantsErrors;
 import com.at.internship.schedule.response.ErrorResponse;
+import org.apache.logging.log4j.message.StringFormattedMessage;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,8 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RestControllerAdvice
@@ -25,9 +29,8 @@ public class ExeptionHandler {
             errorMessages.add(fieldError.getDefaultMessage());
         });
         ErrorResponse response = new ErrorResponse();
-        response.setTimestamp(LocalDateTime.now());
-        response.setCode("VALIDATION_FAILED");
-        response.setMessage("There were validation errors");
+        response.setCode(StringConstantsErrors.VALIDATION_FAILED_CODE);
+        response.setMessage(StringConstantsErrors.VALIDATION_FAILED_MESSAGE);
         response.setErrorMessages(errorMessages);
         return response;
     }
@@ -35,13 +38,25 @@ public class ExeptionHandler {
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleMethodNullPointer(NullPointerException e) {
-        final List<String> errorMessages = new ArrayList<>();
-        errorMessages.add("Requested Not found");
         ErrorResponse response = new ErrorResponse();
-        response.setTimestamp(LocalDateTime.now());
-        response.setCode("RECORD_NOT_FOUND");
-        response.setMessage("Record not found");
-        response.setErrorMessages(errorMessages);
+        response.setCode(StringConstantsErrors.RECORD_NOT_FOUND_CODE);
+        response.setMessage(StringConstantsErrors.RECORD_NOT_FOUND_MESSAGE);
+        response.setErrorMessages(Collections.singletonList(StringConstantsErrors.RECORD_NOT_FOUND_GENERAL));
+        return response;
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleMethodNotFound(EmptyResultDataAccessException e){
+        String errorM;
+        String errorMessage = e.getMessage();
+        int indexOne = errorMessage.indexOf("id");
+        int indexTwo = errorMessage.indexOf(" exists");
+        errorM = errorMessage.substring(indexOne,indexTwo);
+        ErrorResponse response = new ErrorResponse();
+        response.setCode(StringConstantsErrors.RECORD_NOT_FOUND_CODE);
+        response.setMessage(StringConstantsErrors.RECORD_NOT_FOUND_MESSAGE);
+        response.setErrorMessages(Collections.singletonList(String.format(StringConstantsErrors.RECORD_NOT_FOUND_ERROR,errorM)));
         return response;
     }
 }
