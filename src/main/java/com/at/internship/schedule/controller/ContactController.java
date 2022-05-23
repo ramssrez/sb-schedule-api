@@ -6,15 +6,20 @@ import com.at.internship.schedule.converter.ContactConverter;
 import com.at.internship.schedule.domain.Contact;
 import com.at.internship.schedule.dto.ContactCreateDto;
 import com.at.internship.schedule.dto.ContactDetailsDto;
+import com.at.internship.schedule.dto.ContactFiltersDto;
 import com.at.internship.schedule.dto.ContactUpdateDto;
 import com.at.internship.schedule.response.ErrorResponse;
 import com.at.internship.schedule.response.GenericResponse;
 import com.at.internship.schedule.service.IContactService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -94,6 +99,17 @@ public class ContactController {
         response.setCode(StringConstants.FORMAT_RESPONSE_CODE);
         response.setMessage(StringConstants.FORMAT_RESPONSE_DELETE);
         contactService.delete(id);
+        return response;
+    }
+
+    @GetMapping("/find")
+    public GenericResponse<Page<ContactDetailsDto>> findAllFilter(ContactFiltersDto filters, Pageable pageable){
+        GenericResponse<Page<ContactDetailsDto>> response = new GenericResponse<>();
+        Page<Contact> page = contactService.findAllFilter(filters, pageable);
+        List<ContactDetailsDto> content = page.stream().map(contactConverter::contactToContactDetails).collect(Collectors.toList());
+        response.setCode(StringConstants.FORMAT_RESPONSE_CODE);
+        response.setMessage(StringConstants.FORMAT_RESPONSE_MESSAGE);
+        response.setContent(new PageImpl<>(content, page.getPageable(), page.getTotalElements()));
         return response;
     }
 }

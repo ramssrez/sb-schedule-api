@@ -24,23 +24,6 @@ public class ContactConverter {
         contactDto.setBirthDay(dateUtils.formatDefault(contact.getBirthDay()));
         return contactDto;
     }
-    public Contact contactDtoToContact(ContactDetailsDto contactDto) {
-        Contact contact = new Contact();
-        contact.setId(contactDto.getId());
-        contact.setFirstName(contactDto.getFirstName());
-        contact.setLastName(contactDto.getLastName());
-        contact.setEmailAddress(contactDto.getEmailAddress());
-        contact.setBirthDay(dateUtils.parseDefaultDate(contactDto.getBirthDay()));
-        return contact;
-    }
-    public ContactCreateDto contactToCreateDto(Contact contact){
-        ContactCreateDto createDto = new ContactCreateDto();
-        createDto.setFirstName(contact.getFirstName());
-        createDto.setLastName(contact.getLastName());
-        createDto.setEmailAddress(contact.getEmailAddress());
-        createDto.setBirthDay(dateUtils.formatDefault(contact.getBirthDay()));
-        return createDto;
-    }
     public Contact createDtoToContact(ContactCreateDto createDto){
         Contact contact = new Contact();
         contact.setFirstName(createDto.getFirstName());
@@ -58,5 +41,13 @@ public class ContactConverter {
         contact.setBirthDay(dateUtils.parseDefaultDate(updateDto.getBirthDay()));
         return contact;
     }
-
+    public ContactDetailsDto contactToContactDetails(Contact contact) {
+        ContactDetailsDto contactDetailsDto = new ContactDetailsDto();
+        contactDetailsDto.setId(contact.getId());
+        contactDetailsDto.setFirstName(contact.getFirstName());
+        contactDetailsDto.setLastName(contact.getLastName());
+        contactDetailsDto.setEmailAddress(contact.getEmailAddress());
+        contactDetailsDto.setBirthDay(dateUtils.formatDefault(contact.getBirthDay()));
+        return contactDetailsDto;
+    }
 }

@@ -2,6 +2,7 @@ package com.at.internship.schedule.repository;
 
 import com.at.internship.schedule.domain.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface IContactRepository extends JpaRepository<Contact, Integer> {
+public interface IContactRepository extends JpaRepository<Contact, Integer>, JpaSpecificationExecutor<Contact> {
 }
